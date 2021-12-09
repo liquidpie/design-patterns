@@ -31,6 +31,12 @@ public class LensTest {
         User user = new User("johndoe", "jdoe@example.com", new Booking(new Show(new Movie("foo bar"), LocalDateTime.now()), 2));
 
         // Mutations through lenses
+        String username = userNameLens.get(user);
+        Assertions.assertEquals(username, "johndoe");
+
+        user = userNameLens.set(user, "janedoe");
+        Assertions.assertEquals(user.username, "janedoe");
+
         user = changeMovieName.mod(user, s -> "street race");
         Assertions.assertEquals("street race", user.booking.show.movie.title);
 
